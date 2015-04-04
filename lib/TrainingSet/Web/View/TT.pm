@@ -12,6 +12,7 @@ __PACKAGE__->config({
     WRAPPER      => 'site/wrapper',
     ERROR        => 'error.tt2',
     TIMER        => 0,
+	TEMPLATE_EXTENSION => '.tt2',
     render_die   => 1,
 });
 

@@ -23,8 +23,6 @@ Catalyst Controller.
 
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
-
-    $c->response->body('Matched TrainingSet::Web::Controller::Learn in Learn.');
 }
 
 

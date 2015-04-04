@@ -19,6 +19,7 @@ requires
   'Config::General';  # This should reflect the config file format you've chosen
                       # See Catalyst::Plugin::ConfigLoader for supported formats
 
+requires 'Catalyst::Authentication::Realm::SimpleDB';
 requires 'MooseX::NonMoose';
 requires 'Catalyst::Devel';
 requires 'Catalyst::Plugin::Authentication';
