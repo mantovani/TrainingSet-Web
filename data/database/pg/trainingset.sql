@@ -30,6 +30,18 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: messages; Type: TABLE; Schema: public; Owner: mantovani; Tablespace: 
+--
+
+CREATE TABLE messages (
+    id integer NOT NULL,
+    text character varying(250)
+);
+
+
+ALTER TABLE public.messages OWNER TO mantovani;
+
+--
 -- Name: role; Type: TABLE; Schema: public; Owner: mantovani; Tablespace: 
 --
 
@@ -109,6 +121,53 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 
 
 --
+-- Name: vote_types; Type: TABLE; Schema: public; Owner: mantovani; Tablespace: 
+--
+
+CREATE TABLE vote_types (
+    id integer NOT NULL,
+    text character varying(100)
+);
+
+
+ALTER TABLE public.vote_types OWNER TO mantovani;
+
+--
+-- Name: vote_types_id_seq; Type: SEQUENCE; Schema: public; Owner: mantovani
+--
+
+CREATE SEQUENCE vote_types_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.vote_types_id_seq OWNER TO mantovani;
+
+--
+-- Name: vote_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mantovani
+--
+
+ALTER SEQUENCE vote_types_id_seq OWNED BY vote_types.id;
+
+
+--
+-- Name: votes; Type: TABLE; Schema: public; Owner: mantovani; Tablespace: 
+--
+
+CREATE TABLE votes (
+    message_id integer NOT NULL,
+    user_id integer NOT NULL,
+    vote_type_id integer NOT NULL,
+    vote_time timestamp without time zone
+);
+
+
+ALTER TABLE public.votes OWNER TO mantovani;
+
+--
 -- Name: id; Type: DEFAULT; Schema: public; Owner: mantovani
 --
 
@@ -120,6 +179,21 @@ ALTER TABLE ONLY role ALTER COLUMN id SET DEFAULT nextval('role_id_seq'::regclas
 --
 
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: mantovani
+--
+
+ALTER TABLE ONLY vote_types ALTER COLUMN id SET DEFAULT nextval('vote_types_id_seq'::regclass);
+
+
+--
+-- Data for Name: messages; Type: TABLE DATA; Schema: public; Owner: mantovani
+--
+
+COPY messages (id, text) FROM stdin;
+\.
 
 
 --
@@ -166,6 +240,37 @@ SELECT pg_catalog.setval('users_id_seq', 2, true);
 
 
 --
+-- Data for Name: vote_types; Type: TABLE DATA; Schema: public; Owner: mantovani
+--
+
+COPY vote_types (id, text) FROM stdin;
+\.
+
+
+--
+-- Name: vote_types_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mantovani
+--
+
+SELECT pg_catalog.setval('vote_types_id_seq', 1, false);
+
+
+--
+-- Data for Name: votes; Type: TABLE DATA; Schema: public; Owner: mantovani
+--
+
+COPY votes (message_id, user_id, vote_type_id, vote_time) FROM stdin;
+\.
+
+
+--
+-- Name: messages_pkey; Type: CONSTRAINT; Schema: public; Owner: mantovani; Tablespace: 
+--
+
+ALTER TABLE ONLY messages
+    ADD CONSTRAINT messages_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: role_pkey; Type: CONSTRAINT; Schema: public; Owner: mantovani; Tablespace: 
 --
 
@@ -190,6 +295,22 @@ ALTER TABLE ONLY users
 
 
 --
+-- Name: vote_types_pkey; Type: CONSTRAINT; Schema: public; Owner: mantovani; Tablespace: 
+--
+
+ALTER TABLE ONLY vote_types
+    ADD CONSTRAINT vote_types_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: votes_pkey; Type: CONSTRAINT; Schema: public; Owner: mantovani; Tablespace: 
+--
+
+ALTER TABLE ONLY votes
+    ADD CONSTRAINT votes_pkey PRIMARY KEY (message_id, user_id, vote_type_id);
+
+
+--
 -- Name: user_role_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mantovani
 --
 
@@ -203,6 +324,30 @@ ALTER TABLE ONLY user_role
 
 ALTER TABLE ONLY user_role
     ADD CONSTRAINT user_role_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: votes_message_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mantovani
+--
+
+ALTER TABLE ONLY votes
+    ADD CONSTRAINT votes_message_id_fkey FOREIGN KEY (message_id) REFERENCES messages(id);
+
+
+--
+-- Name: votes_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mantovani
+--
+
+ALTER TABLE ONLY votes
+    ADD CONSTRAINT votes_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
+
+
+--
+-- Name: votes_vote_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mantovani
+--
+
+ALTER TABLE ONLY votes
+    ADD CONSTRAINT votes_vote_type_id_fkey FOREIGN KEY (vote_type_id) REFERENCES vote_types(id);
 
 
 --
