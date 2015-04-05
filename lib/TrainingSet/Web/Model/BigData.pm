@@ -22,8 +22,7 @@ sub get_tweets {
     my ( $self, $user_id ) = @_;
     $self->twitter->find(
         {
-            #'text'                   => qr/entrega|governo|brasil|atraso|comercial/i,
-            'learning_machine.votes' => { '$lte' => 1 },
+            'text' => { '$exists' => 1 },
             'learning_machine.users' => { '$ne' => { '$in' => [$user_id] } },
             'learning_machine.ignore' => { '$ne' => 1 }
         }
