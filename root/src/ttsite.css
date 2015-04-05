@@ -16,17 +16,6 @@ body {
     border-bottom: 1px solid [% site.col.line %];
 }
 
-#footer {
-    background-color: [% site.col.head %];
-    text-align: center;
-    border-top: 1px solid [% site.col.line %];
-    position: absolute;
-    bottom: 0;
-    left: 0px;
-    width: 100%;
-    padding: 4px;
-}
-
 #content {
     padding: 10px;
 }
@@ -43,3 +32,14 @@ h1.title {
 .error {
     color: [% site.col.error %];
 }
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th,td {
+    padding: 15px;
+}
+
+

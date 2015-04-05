@@ -1,0 +1,24 @@
+[% META title = 'Sentimental Analysis' %]
+<p>Welcome: <b>[% c.user.username %]<b/></p>
+
+<table>
+	<tr>
+		<td>Tweets</td>
+	</tr>
+
+<form method="post" action="[% c.uri_for(c.controller('Learn').action_for('vote')) %]">
+[% FOREACH tweet IN tweets.keys %]
+	<tr>
+		<td>[% tweets.$tweet %]</td>
+	[% FOREACH vote IN votes %]
+		<td><input type="radio" name="[% tweet %]" value="[% vote.0 %]">[% vote.1 %]</td>
+	[% END %]
+	</tr>
+[% END %]
+</table>
+	<input type="image" src="/static/images/submit.gif">
+</form>
+</br>
+</br>
+</br>
+<p>Obrigado!</p>

@@ -34,7 +34,7 @@ SET default_with_oids = false;
 --
 
 CREATE TABLE messages (
-    id integer NOT NULL,
+    id character varying(100) NOT NULL,
     text character varying(250)
 );
 
@@ -158,10 +158,10 @@ ALTER SEQUENCE vote_types_id_seq OWNED BY vote_types.id;
 --
 
 CREATE TABLE votes (
-    message_id integer NOT NULL,
+    message_id character varying(100) NOT NULL,
     user_id integer NOT NULL,
     vote_type_id integer NOT NULL,
-    vote_time timestamp without time zone
+    vote_time timestamp without time zone DEFAULT now()
 );
 
 
@@ -244,6 +244,10 @@ SELECT pg_catalog.setval('users_id_seq', 2, true);
 --
 
 COPY vote_types (id, text) FROM stdin;
+1	positive
+2	neutral
+3	negative
+4	ignore
 \.
 
 
@@ -324,30 +328,6 @@ ALTER TABLE ONLY user_role
 
 ALTER TABLE ONLY user_role
     ADD CONSTRAINT user_role_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: votes_message_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mantovani
---
-
-ALTER TABLE ONLY votes
-    ADD CONSTRAINT votes_message_id_fkey FOREIGN KEY (message_id) REFERENCES messages(id);
-
-
---
--- Name: votes_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mantovani
---
-
-ALTER TABLE ONLY votes
-    ADD CONSTRAINT votes_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
-
-
---
--- Name: votes_vote_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mantovani
---
-
-ALTER TABLE ONLY votes
-    ADD CONSTRAINT votes_vote_type_id_fkey FOREIGN KEY (vote_type_id) REFERENCES vote_types(id);
 
 
 --

@@ -100,21 +100,6 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
-=head2 votes
-
-Type: has_many
-
-Related object: L<TrainingSet::Web::Schema::Result::Vote>
-
-=cut
-
-__PACKAGE__->has_many(
-  "votes",
-  "TrainingSet::Web::Schema::Result::Vote",
-  { "foreign.user_id" => "self.id" },
-  { cascade_copy => 0, cascade_delete => 0 },
-);
-
 =head2 roles
 
 Type: many_to_many
@@ -126,8 +111,8 @@ Composing rels: L</user_roles> -> role
 __PACKAGE__->many_to_many("roles", "user_roles", "role");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07042 @ 2015-04-04 17:43:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:yy2RFCs+y37PvzE6aBA2zg
+# Created by DBIx::Class::Schema::Loader v0.07042 @ 2015-04-04 21:15:10
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:qDSVGTBXvTr3uFExuex6iQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

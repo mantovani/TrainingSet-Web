@@ -16,16 +16,33 @@ Catalyst Controller.
 
 =cut
 
-
-=head2 index
-
-=cut
-
-sub index :Path :Args(0) {
+sub base : Chained('/') : PathPart('Learn') : CaptureArgs(0) {
     my ( $self, $c ) = @_;
+
+    # - Get votes options (positive,negative etc)
+    $c->stash->{votes} =
+      [ map { [ $_->get_column('id'), $_->get_column('text') ] }
+          $c->model('DB')->resultset('VoteType')->all ];
 }
 
+sub index : Chained('base') : PathPart('') : Args(0) {
+    my ( $self, $c ) = @_;
 
+    # - Get tweets to vote
+    my $cursor = $c->model('BigData')->get_tweets( $c->user->id );
+    while ( my $cursor = $cursor->next ) {
+        $c->stash->{tweets}->{ $cursor->{_id} } = $cursor->{text};
+    }
+    $c->session->{tweets} = $c->stash->{tweets};
+}
+
+sub vote : Chained('base') : PathPart('vote') : Args(0) {
+    my ( $self, $c ) = @_;
+    $c->model('DB')
+      ->save_votes( $c->request->params, $c->session->{tweets}, $c->user->id );
+    $c->model('BigData')->update_tweets( $c->request->params, $c->user->id );
+    $c->res->redirect('/Learn');
+}
 
 =encoding utf8
 

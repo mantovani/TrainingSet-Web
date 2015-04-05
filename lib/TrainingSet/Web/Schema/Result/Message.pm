@@ -40,8 +40,9 @@ __PACKAGE__->table("messages");
 
 =head2 id
 
-  data_type: 'integer'
+  data_type: 'varchar'
   is_nullable: 0
+  size: 100
 
 =head2 text
 
@@ -53,7 +54,7 @@ __PACKAGE__->table("messages");
 
 __PACKAGE__->add_columns(
   "id",
-  { data_type => "integer", is_nullable => 0 },
+  { data_type => "varchar", is_nullable => 0, size => 100 },
   "text",
   { data_type => "varchar", is_nullable => 1, size => 250 },
 );
@@ -70,26 +71,9 @@ __PACKAGE__->add_columns(
 
 __PACKAGE__->set_primary_key("id");
 
-=head1 RELATIONS
 
-=head2 votes
-
-Type: has_many
-
-Related object: L<TrainingSet::Web::Schema::Result::Vote>
-
-=cut
-
-__PACKAGE__->has_many(
-  "votes",
-  "TrainingSet::Web::Schema::Result::Vote",
-  { "foreign.message_id" => "self.id" },
-  { cascade_copy => 0, cascade_delete => 0 },
-);
-
-
-# Created by DBIx::Class::Schema::Loader v0.07042 @ 2015-04-04 17:43:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:WyYTnCmFS2kw7oKnjxNK5A
+# Created by DBIx::Class::Schema::Loader v0.07042 @ 2015-04-04 22:04:19
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:fV8eg0vQVZLCQpJWXMo3/Q
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

@@ -19,6 +19,9 @@ requires
   'Config::General';  # This should reflect the config file format you've chosen
                       # See Catalyst::Plugin::ConfigLoader for supported formats
 
+requires 'DBD::Pg';
+requires 'Catalyst::Model::MongoDB';
+requires 'Catalyst::Helper::Model::MongoDB';
 requires 'Catalyst::Authentication::Realm::SimpleDB';
 requires 'MooseX::NonMoose';
 requires 'Catalyst::Devel';

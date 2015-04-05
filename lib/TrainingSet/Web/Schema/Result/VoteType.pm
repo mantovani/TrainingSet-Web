@@ -77,26 +77,9 @@ __PACKAGE__->add_columns(
 
 __PACKAGE__->set_primary_key("id");
 
-=head1 RELATIONS
 
-=head2 votes
-
-Type: has_many
-
-Related object: L<TrainingSet::Web::Schema::Result::Vote>
-
-=cut
-
-__PACKAGE__->has_many(
-  "votes",
-  "TrainingSet::Web::Schema::Result::Vote",
-  { "foreign.vote_type_id" => "self.id" },
-  { cascade_copy => 0, cascade_delete => 0 },
-);
-
-
-# Created by DBIx::Class::Schema::Loader v0.07042 @ 2015-04-04 17:43:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:p9cz2M2Yb6SctPzdFWI7yA
+# Created by DBIx::Class::Schema::Loader v0.07042 @ 2015-04-04 21:15:10
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:YXWR0Nlm9ul51irhyyxAug
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
