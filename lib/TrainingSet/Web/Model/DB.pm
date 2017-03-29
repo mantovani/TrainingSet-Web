@@ -14,7 +14,7 @@ __PACKAGE__->config(
 );
 
 sub save_votes {
-    my ( $self, $votes, $tweets, $user_id ) = @_; use Data::Dumper;
+    my ( $self, $votes, $tweets, $user_id ) = @_;
     foreach my $tweet_id ( grep { /[\w\d]{10,}/ } keys $votes ) {
         my $insert_msg =
           $self->resultset('Message')
